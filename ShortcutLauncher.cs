@@ -22,6 +22,20 @@ public class SilkLauncher : Window
     readonly DrawingVisual drawing=new DrawingVisual();
     readonly Stopwatch clock=new Stopwatch();
     readonly Point origin;
+    readonly bool playScarlet;
+    static readonly string RolePreference=Path.Combine(
+        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+        "SpiderCodex","next-role.txt");
+
+    static bool LoadNextRole()
+    {
+        return File.Exists(RolePreference) && File.ReadAllText(RolePreference).Trim()=="scarlet";
+    }
+
+    static string FrameFolder(string baseDirectory,bool scarlet)
+    {
+        return Path.Combine(baseDirectory,scarlet?"scarlet-transparent-frames":"detail-transparent-frames");
+    }
     readonly System.Windows.Threading.DispatcherTimer escapeTimer=new System.Windows.Threading.DispatcherTimer();
     BitmapSource[] bitmaps;
     Frame[] frames;
@@ -38,17 +52,20 @@ public class SilkLauncher : Window
             if(args.Length>0 && args[0]=="--selftest") {
                 Point a=Map(960,540,1920,1080),b=Map(0,0,1920,1080),c=Map(1280,720,2560,1440);
                 if(a.X!=640||a.Y!=360||b.X!=0||b.Y!=0||c.X!=640||c.Y!=360)throw new Exception("Coordinate check failed");
-                string folder=Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"detail-transparent-frames");
-                var list=new JavaScriptSerializer().Deserialize<Frame[]>(File.ReadAllText(Path.Combine(folder,"manifest.json")));
-                if(list.Length!=360)throw new Exception("Missing frames");
-                foreach(var f in list)if(!File.Exists(Path.Combine(folder,f.file)))throw new Exception("Missing frame "+f.file);
-                File.WriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"shortcut-check.txt"),"PASS: coordinate mapping; 360 animation frames present");return;
+                foreach(bool scarlet in new[]{false,true}){
+                    string folder=FrameFolder(AppDomain.CurrentDomain.BaseDirectory,scarlet);
+                    var list=new JavaScriptSerializer().Deserialize<Frame[]>(File.ReadAllText(Path.Combine(folder,"manifest.json")));
+                    if(list.Length!=360)throw new Exception("Missing frames: "+folder);
+                    foreach(var f in list)if(!File.Exists(Path.Combine(folder,f.file)))throw new Exception("Missing frame "+f.file);
+                }
+                File.WriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"shortcut-check.txt"),"PASS: coordinate mapping; both roles have 360 animation frames");return;
             }
             new Application().Run(new SilkLauncher(p,Array.IndexOf(args,"--record-demo")>=0));
         } catch(Exception e){MessageBox.Show(e.Message,"蛛丝启动器");}
     }
     SilkLauncher(NativePoint p,bool recordDemo)
     {
+        playScarlet=LoadNextRole();
         var monitor=System.Windows.Forms.Screen.FromPoint(new System.Drawing.Point(p.X,p.Y)).Bounds;
         double dpi;using(var g=System.Drawing.Graphics.FromHwnd(IntPtr.Zero)){dpi=g.DpiX/96.0;}
         // Keep the overlay strictly smaller than both the display and work area:
@@ -72,6 +89,25 @@ public class SilkLauncher : Window
         close.Template=new ControlTemplate(typeof(Button)){VisualTree=hitArea};
         close.MouseEnter+=(o,args)=>close.Foreground=Brushes.LightPink;
         close.MouseLeave+=(o,args)=>close.Foreground=Brushes.White;
+        bool nextScarlet=playScarlet;
+        var roleSwitch=new Button{
+            Content=nextScarlet?"NEXT: SPIDER-MAN":"NEXT: MILES",
+            ToolTip="Choose the character for the next launch",
+            Width=154,Height=38,Margin=new Thickness(0,14,62,0),
+            HorizontalAlignment=HorizontalAlignment.Right,VerticalAlignment=VerticalAlignment.Top,
+            FontFamily=new FontFamily("Bahnschrift"),FontSize=14,Foreground=Brushes.White,
+            Cursor=System.Windows.Input.Cursors.Hand,Template=close.Template
+        };
+        roleSwitch.Click+=(s,e)=>{
+            try{
+                bool selected=!nextScarlet;
+                Directory.CreateDirectory(Path.GetDirectoryName(RolePreference));
+                File.WriteAllText(RolePreference,selected?"scarlet":"miles");
+                nextScarlet=selected;
+                roleSwitch.Content=nextScarlet?"NEXT: SPIDER-MAN":"NEXT: MILES";
+            }catch(Exception ex){MessageBox.Show(ex.Message,"Spider Codex");}
+        };
+        grid.Children.Add(roleSwitch);
         var wordmark=new StackPanel{Orientation=Orientation.Horizontal};
         var red=new TextBlock{Text="SPIDERMAN",FontFamily=new FontFamily("Impact"),FontSize=39,Padding=new Thickness(12,2,12,3),Foreground=Brushes.White,Background=new SolidColorBrush(Color.FromRgb(221,17,40))};
         var white=new TextBlock{Text="WORKSPACE",FontFamily=new FontFamily("Bahnschrift Condensed"),FontSize=34,FontWeight=FontWeights.SemiBold,Foreground=Brushes.White,Padding=new Thickness(5,0,5,1)};
@@ -101,7 +137,7 @@ public class SilkLauncher : Window
             escapeTimer.Start();
             var thread=new Thread(()=>{
                 try{
-                    string folder=Path.Combine(root,"detail-transparent-frames");
+                    string folder=FrameFolder(root,playScarlet);
                     frames=new JavaScriptSerializer().Deserialize<Frame[]>(File.ReadAllText(Path.Combine(folder,"manifest.json")));
                     bitmaps=new BitmapSource[frames.Length];
                     for(int i=0;i<frames.Length;i++){

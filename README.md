@@ -4,7 +4,7 @@ Windows 桌面启动器。运行后播放透明蛛丝动画，点击 SPIDERMAN W
 
 ## 下载
 
-**[下载 Windows x64 · v0.1.0-beta](https://github.com/Iris-change/spider-codex/releases/download/v0.1.0-beta/Spider-Codex-Windows-x64.zip)** · [发布说明](https://github.com/Iris-change/spider-codex/releases/tag/v0.1.0-beta)
+**[下载 Windows x64 · v0.2.0-beta](https://github.com/Iris-change/spider-codex/releases/download/v0.2.0-beta/Spider-Codex-Windows-x64.zip)** · [发布说明](https://github.com/Iris-change/spider-codex/releases/tag/v0.2.0-beta)
 
 ## 动画演示
 
@@ -22,7 +22,7 @@ Windows 桌面启动器。运行后播放透明蛛丝动画，点击 SPIDERMAN W
 .\build.ps1
 ```
 
-运行包解压后，双击 `Spider-Shortcut.exe`。透明蛛丝动画、迈尔斯头像、进入按钮及桌面图标都随包提供。创建桌面快捷方式时可使用 `Spider-Codex.ico`。请让 `detail-transparent-frames` 和 exe 保持在同一目录。
+运行包解压后，双击 `Spider-Shortcut.exe`。发布包含迈尔斯和红衣蜘蛛侠两套动画。首次启动默认播放迈尔斯。点击右上角 NEXT: MILES / NEXT: SPIDER-MAN 可切换下次启动的角色，当前动画会继续播放。创建桌面快捷方式时可使用 `Spider-Codex.ico`。请让两套动画素材目录和 exe 保持在同一目录。
 
 ## 许可与素材
 
