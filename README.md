@@ -1,16 +1,19 @@
 # Spider Codex
 
-Windows 桌面启动器。运行后播放透明蛛丝动画，点击 SPIDERMAN WORKSPACE 打开 Windows 注册的 Codex 应用。按 Esc 或点击右上角 × 可关闭动画。
+## [⬇ 下载 Windows x64 双角色版](https://github.com/Iris-change/spider-codex/releases/download/v0.2.0-beta/Spider-Codex-Windows-x64.zip)
 
-## 下载
+**v0.2.0-beta** · [查看发布说明](https://github.com/Iris-change/spider-codex/releases/tag/v0.2.0-beta)
 
-**[下载 Windows x64 · v0.2.0-beta](https://github.com/Iris-change/spider-codex/releases/download/v0.2.0-beta/Spider-Codex-Windows-x64.zip)** · [发布说明](https://github.com/Iris-change/spider-codex/releases/tag/v0.2.0-beta)
+Spider Codex 是一个 Windows 桌面启动器，内置迈尔斯和红衣蜘蛛侠两套透明蛛丝动画。解压后双击 `Spider-Shortcut.exe`，**首次默认播放迈尔斯**。
 
-## 动画演示
+点击右上角的 **`NEXT: MILES` / `NEXT: SPIDER-MAN`** 选择下次打开时播放的角色，**当前动画继续播放，不会重播**。任一角色播完后，点击 **SPIDERMAN WORKSPACE** 即可进入原生 Codex。按 `Esc` 或点右上角 `×` 可关闭。
 
-![手腕发射蛛丝、蛛网铺开并收拢成蜘蛛侠头像](docs/wrist-demo.gif)
+## 双角色动画演示
 
-[观看清晰版短片](https://github.com/Iris-change/spider-codex/blob/main/docs/wrist-demo.mp4)
+| 迈尔斯 | 红衣蜘蛛侠 |
+| :---: | :---: |
+| [![迈尔斯启动动画节选](docs/miles-launch.gif)](docs/miles-launch.mp4) | [![红衣蜘蛛侠启动动画节选](docs/scarlet-launch.gif)](docs/scarlet-launch.mp4) |
+| [观看迈尔斯短片](docs/miles-launch.mp4) | [观看红衣蜘蛛侠短片](docs/scarlet-launch.mp4) |
 
 ## 构建与运行
 
@@ -22,7 +25,7 @@ Windows 桌面启动器。运行后播放透明蛛丝动画，点击 SPIDERMAN W
 .\build.ps1
 ```
 
-运行包解压后，双击 `Spider-Shortcut.exe`。发布包含迈尔斯和红衣蜘蛛侠两套动画。首次启动默认播放迈尔斯。点击右上角 NEXT: MILES / NEXT: SPIDER-MAN 可切换下次启动的角色，当前动画会继续播放。创建桌面快捷方式时可使用 `Spider-Codex.ico`。请让两套动画素材目录和 exe 保持在同一目录。
+创建桌面快捷方式时可使用 `Spider-Codex.ico`。请让两套动画素材目录和 `Spider-Shortcut.exe` 保持在同一目录。
 
 ## 许可与素材
 
