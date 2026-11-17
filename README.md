@@ -6,6 +6,12 @@ Windows 桌面启动器。运行后播放透明蛛丝动画，点击 SPIDERMAN W
 
 **[下载 Windows x64 · v0.1.0-beta](https://github.com/Iris-change/spider-codex/releases/download/v0.1.0-beta/Spider-Codex-Windows-x64.zip)** · [发布说明](https://github.com/Iris-change/spider-codex/releases/tag/v0.1.0-beta)
 
+## 动画演示
+
+![手腕发射蛛丝、蛛网铺开并收拢成蜘蛛侠头像](docs/wrist-demo.gif)
+
+[观看清晰版短片](https://github.com/Iris-change/spider-codex/blob/main/docs/wrist-demo.mp4)
+
 ## 构建与运行
 
 需要 64 位 Windows、系统里的 .NET Framework 4.x 构建工具，以及通过 Microsoft Store 安装的 Codex。Codex 的注册应用 ID 为 `OpenAI.Codex_2p2nqsd0c76g0!App`。
